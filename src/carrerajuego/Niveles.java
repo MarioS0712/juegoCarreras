@@ -1,6 +1,8 @@
 package carrerajuego;
 
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +19,7 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class Niveles extends JFrame {
     
     private JLabel lblFondo;
-
+    private static JLabel lblPuntos;
     public Niveles() {
         setSize(1250, 850);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -27,6 +29,12 @@ public class Niveles extends JFrame {
         lblFondo.setBounds(0, 0, 1250, 850);
         add(lblFondo);
         GestorAudio.getInstance().reproducir("/Users/mariosolis/NetBeansProjects/carreraJuego/src/carrerajuego/menuTheme.mp3");
+        //Puntos
+        lblPuntos = new JLabel("Puntos: " + Puntos.getPuntos());
+        lblPuntos.setForeground(Color.YELLOW); // Amarillo para que resalte
+        lblPuntos.setFont(new Font("Arial", Font.BOLD, 18)); // Un poco de estilo
+        lblPuntos.setBounds(1000, 20, 200, 30); // Posicionado a la derecha
+        lblFondo.add(lblPuntos);
         // Botón de nivel1
         ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("level1.png")); // jpg, png, gif
         Image imagenEscalada = iconoOriginal.getImage()
@@ -129,7 +137,7 @@ public class Niveles extends JFrame {
     private void nivelUno() {
         GestorAudio.getInstance().detener();
         Ventana ventana2 = new Ventana();
-        ventana2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ventana2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana2.setSize(1250, 850);
         ventana2.setResizable(false);
         ventana2.setLocationRelativeTo(null);
@@ -138,6 +146,7 @@ public class Niveles extends JFrame {
     }
     
     private void nivelDos() {
+        GestorAudio.getInstance().detener();
         Ventana2 ventana3 = new Ventana2();
         ventana3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana3.setSize(1250, 850);
@@ -148,6 +157,7 @@ public class Niveles extends JFrame {
     }
     
     private void nivelTres() {
+        GestorAudio.getInstance().detener();
         Ventana3 ventana4 = new Ventana3();
         ventana4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana4.setSize(1250, 850);
@@ -158,6 +168,7 @@ public class Niveles extends JFrame {
     }
     
     private void nivelCuatro() {
+        GestorAudio.getInstance().detener();
         Ventana4 ventana5 = new Ventana4();
         ventana5.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana5.setSize(1250, 850);
@@ -167,6 +178,7 @@ public class Niveles extends JFrame {
         dispose();
     }
     private void nivelCinco() {
+        GestorAudio.getInstance().detener();
         Ventana5 ventana6 = new Ventana5();
         ventana6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana6.setSize(1250, 850);

@@ -22,7 +22,7 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  * @author mariosolis
  */
 public class VentanaMenu extends JFrame {
-
+    public static int puntosTotales = 0;
     private JLabel lblFondo;
 
     public VentanaMenu() {
