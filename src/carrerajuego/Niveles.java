@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
@@ -17,9 +18,10 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  * @author mariosolis
  */
 public class Niveles extends JFrame {
-    
+
     private JLabel lblFondo;
     private static JLabel lblPuntos;
+
     public Niveles() {
         setSize(1250, 850);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -47,7 +49,7 @@ public class Niveles extends JFrame {
         iniciarJuego.setFocusPainted(false);
         iniciarJuego.setCursor(new Cursor(Cursor.HAND_CURSOR));
         lblFondo.add(iniciarJuego);
-         // Botón de nivel2
+        // Botón de nivel2
         ImageIcon iconoOriginal2 = new ImageIcon(getClass().getResource("level2.png")); // jpg, png, gif
         Image imagenEscalada2 = iconoOriginal2.getImage()
                 .getScaledInstance(350, 200, Image.SCALE_SMOOTH); // ancho, alto
@@ -59,7 +61,7 @@ public class Niveles extends JFrame {
         iniciarNivel2.setFocusPainted(false);
         iniciarNivel2.setCursor(new Cursor(Cursor.HAND_CURSOR));
         lblFondo.add(iniciarNivel2);
-         // Botón de nivel3
+        // Botón de nivel3
         ImageIcon iconoOriginal3 = new ImageIcon(getClass().getResource("level3.png")); // jpg, png, gif
         Image imagenEscalada3 = iconoOriginal3.getImage()
                 .getScaledInstance(350, 200, Image.SCALE_SMOOTH); // ancho, alto
@@ -71,7 +73,7 @@ public class Niveles extends JFrame {
         iniciarNivel3.setFocusPainted(false);
         iniciarNivel3.setCursor(new Cursor(Cursor.HAND_CURSOR));
         lblFondo.add(iniciarNivel3);
-         // Botón de nivel4
+        // Botón de nivel4
         ImageIcon iconoOriginal4 = new ImageIcon(getClass().getResource("level4.png")); // jpg, png, gif
         Image imagenEscalada4 = iconoOriginal4.getImage()
                 .getScaledInstance(350, 200, Image.SCALE_SMOOTH); // ancho, alto
@@ -83,7 +85,7 @@ public class Niveles extends JFrame {
         iniciarNivel4.setFocusPainted(false);
         iniciarNivel4.setCursor(new Cursor(Cursor.HAND_CURSOR));
         lblFondo.add(iniciarNivel4);
-         // Botón de nivel Final
+        // Botón de nivel Final
         ImageIcon iconoOriginal5 = new ImageIcon(getClass().getResource("level5.png")); // jpg, png, gif
         Image imagenEscalada5 = iconoOriginal5.getImage()
                 .getScaledInstance(350, 200, Image.SCALE_SMOOTH); // ancho, alto
@@ -95,34 +97,66 @@ public class Niveles extends JFrame {
         iniciarNivel5.setFocusPainted(false);
         iniciarNivel5.setCursor(new Cursor(Cursor.HAND_CURSOR));
         lblFondo.add(iniciarNivel5);
+        // Botón de Salir del Selector
+        ImageIcon iconoOriginal6 = new ImageIcon(getClass().getResource("salir.png")); // jpg, png, gif
+        Image imagenEscalada6 = iconoOriginal6.getImage()
+                .getScaledInstance(350, 200, Image.SCALE_SMOOTH); // ancho, alto
+        ImageIcon iconoFinal6 = new ImageIcon(imagenEscalada6);
+        JButton iniciarNivel6 = new JButton(iconoFinal6);
+        iniciarNivel6.setBounds(950, 700, 250, 70);
+        iniciarNivel6.setBorderPainted(false);   // sin borde
+        iniciarNivel6.setContentAreaFilled(false); // sin fondo gris
+        iniciarNivel6.setFocusPainted(false);
+        iniciarNivel6.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblFondo.add(iniciarNivel6);
         iniciarJuego.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nivelUno();
             }
         });
-         iniciarNivel2.addActionListener(new ActionListener() {
+        iniciarNivel2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nivelDos();
             }
         });
-          iniciarNivel3.addActionListener(new ActionListener() {
+        iniciarNivel3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nivelTres();
             }
         });
-           iniciarNivel4.addActionListener(new ActionListener() {
+        iniciarNivel4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nivelCuatro();
             }
         });
-            iniciarNivel5.addActionListener(new ActionListener() {
+        iniciarNivel5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nivelCinco();
+            }
+        });
+        iniciarNivel6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] opciones = {"Cancelar", "Salir a Inicio"};
+                int respuesta = JOptionPane.showOptionDialog(
+                        null, "Perderás todo tus puntos", "Seguro?",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.PLAIN_MESSAGE,
+                        null, opciones, opciones[0]
+                );
+                if (respuesta == 0) {
+                    return;
+                } else {
+                    Puntos.reiniciarPuntos();
+                    Inicio();
+
+                }
+
             }
         });
     }
@@ -144,7 +178,7 @@ public class Niveles extends JFrame {
         ventana2.setVisible(true);
         dispose();
     }
-    
+
     private void nivelDos() {
         GestorAudio.getInstance().detener();
         Ventana2 ventana3 = new Ventana2();
@@ -155,7 +189,7 @@ public class Niveles extends JFrame {
         ventana3.setVisible(true);
         dispose();
     }
-    
+
     private void nivelTres() {
         GestorAudio.getInstance().detener();
         Ventana3 ventana4 = new Ventana3();
@@ -166,7 +200,7 @@ public class Niveles extends JFrame {
         ventana4.setVisible(true);
         dispose();
     }
-    
+
     private void nivelCuatro() {
         GestorAudio.getInstance().detener();
         Ventana4 ventana5 = new Ventana4();
@@ -177,6 +211,7 @@ public class Niveles extends JFrame {
         ventana5.setVisible(true);
         dispose();
     }
+
     private void nivelCinco() {
         GestorAudio.getInstance().detener();
         Ventana5 ventana6 = new Ventana5();
@@ -187,5 +222,16 @@ public class Niveles extends JFrame {
         ventana6.setVisible(true);
         dispose();
     }
-    
+
+    private void Inicio() {
+        GestorAudio.getInstance().detener();
+        VentanaMenu ventana7 = new VentanaMenu();
+        ventana7.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana7.setSize(1250, 850);
+        ventana7.setResizable(false);
+        ventana7.setLocationRelativeTo(null);
+        ventana7.setVisible(true);
+        dispose();
+    }
+
 }
