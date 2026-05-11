@@ -18,6 +18,9 @@ public class Ventana extends JFrame {
     public static JLabel lblResultado;
     private JLabel lblMeta;
     private JLabel lblFondo;
+    
+    public static int puntosTotales = 0;
+    private static JLabel lblPuntos;
 
     // Obstáculos y enemigo
     private static List<Obstaculo> obstaculos = new ArrayList<>();
@@ -74,7 +77,14 @@ public class Ventana extends JFrame {
         lblResultado.setForeground(Color.WHITE);
         lblResultado.setBounds(220, 20, 400, 30);
         lblFondo.add(lblResultado);
-
+        
+        //puntos
+        lblPuntos = new JLabel("Puntos: " + puntosTotales);
+        lblPuntos.setForeground(Color.YELLOW); // Amarillo para que resalte
+        lblPuntos.setFont(new Font("Arial", Font.BOLD, 18)); // Un poco de estilo
+        lblPuntos.setBounds(1000, 20, 200, 30); // Posicionado a la derecha
+        lblFondo.add(lblPuntos);
+        
         // Botón iniciar
         btnIniciar = new JButton("Iniciar Carrera");
         btnIniciar.setBounds(50, 20, 150, 30);
@@ -162,7 +172,7 @@ public class Ventana extends JFrame {
     SwingUtilities.invokeLater(() -> {
         reiniciarUbi();
         lblResultado.setText("¿Quién ganará?");
-
+        lblPuntos.setText("Puntos: " + puntosTotales);
         // Crear hilos nuevos
         crashJugador = new CrashJugador(personajes[1], lblResultado, obstaculos);
 
@@ -190,4 +200,19 @@ public class Ventana extends JFrame {
         Image imagenRedimensionada = imagenOriginal.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
         return new ImageIcon(imagenRedimensionada);
     }
+     public static void actualizarPuntuacion(boolean gano) {
+        if (gano) {
+            puntosTotales += 100;
+        } else {
+            puntosTotales -= 25;
+        if (puntosTotales < 0) puntosTotales = 0;
+        }
+
+        // Actualización visual obligatoria
+        if (lblPuntos != null) {
+            lblPuntos.setText("Puntos: " + puntosTotales);
+            lblPuntos.repaint(); // <--- Fuerza a Java a pintar el cambio
+            lblPuntos.revalidate(); // <--- Reorganiza el layout si es necesario
+        }
+     }
 }

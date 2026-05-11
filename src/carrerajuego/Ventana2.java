@@ -18,6 +18,8 @@ public class Ventana2 extends JFrame {
     public static JLabel lblResultado;
     private JLabel lblMeta;
     private JLabel lblFondo;
+    public static int puntosTotales = 0;
+    private JLabel lblPuntos;
 
     // Obstáculos y enemigo
     private static List<Obstaculo> obstaculos = new ArrayList<>();
@@ -79,6 +81,13 @@ public class Ventana2 extends JFrame {
         lblResultado.setForeground(Color.WHITE);
         lblResultado.setBounds(220, 20, 400, 30);
         lblFondo.add(lblResultado);
+        
+        //puntos
+        lblPuntos = new JLabel("Puntos: " + puntosTotales);
+        lblPuntos.setForeground(Color.YELLOW); // Amarillo para que resalte
+        lblPuntos.setFont(new Font("Arial", Font.BOLD, 18)); // Un poco de estilo
+        lblPuntos.setBounds(1000, 20, 200, 30); // Posicionado a la derecha
+        lblFondo.add(lblPuntos);
 
         // Botón iniciar
         btnIniciar = new JButton("Iniciar Carrera");
@@ -139,13 +148,13 @@ public class Ventana2 extends JFrame {
 
     private void iniciarCarrera() {
         lblResultado.setText("Carrera en progreso...");
-        Corredor.resetearGanador();
+        CorredorIntermedio.resetearGanador();
 
         crashJugador = new CrashJugador(personajes[1], lblResultado, obstaculos);
         crashJugador.start();
 
-        hiloUkauka = new Corredor("UkaUka", personajes[0], lblResultado);
-        hiloVortex = new Corredor("Vortex", personajes[2], lblResultado);
+        hiloUkauka = new CorredorIntermedio("UkaUka", personajes[0], lblResultado);
+        hiloVortex = new CorredorIntermedio("Vortex", personajes[2], lblResultado);
         hiloUkauka.start();
         hiloVortex.start();
 
@@ -162,7 +171,7 @@ public class Ventana2 extends JFrame {
     if (hiloUkauka   != null) hiloUkauka.interrupt();
     if (hiloVortex   != null) hiloVortex.interrupt();
 
-    Corredor.resetearGanador();
+    CorredorIntermedio.resetearGanador();
 
     SwingUtilities.invokeLater(() -> {
         reiniciarUbi();
@@ -171,8 +180,8 @@ public class Ventana2 extends JFrame {
         // Crear hilos nuevos
         crashJugador = new CrashJugador(personajes[1], lblResultado, obstaculos);
 
-        hiloUkauka = new Corredor("UkaUka", personajes[0], lblResultado);
-        hiloVortex = new Corredor("Vortex", personajes[2], lblResultado);
+        hiloUkauka = new CorredorIntermedio("UkaUka", personajes[0], lblResultado);
+        hiloVortex = new CorredorIntermedio("Vortex", personajes[2], lblResultado);
 
         enemigoHilo = new Enemigo(lblEnemigo, personajes[1], lblResultado);
     });
@@ -194,5 +203,20 @@ public class Ventana2 extends JFrame {
         Image imagenOriginal = iconoOriginal.getImage();
         Image imagenRedimensionada = imagenOriginal.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
         return new ImageIcon(imagenRedimensionada);
+    }
+     public void actualizarPuntuacion(boolean gano) {
+        if (gano) {
+            puntosTotales += 100;
+        // Opcional: Mostrar un mensaje rápido
+            System.out.println("¡Nivel superado! +100 puntos.");
+        } else {
+        puntosTotales -= 25;
+        // Evitar que los puntos sean negativos (opcional)
+            if (puntosTotales < 0) puntosTotales = 0; 
+            System.out.println("Intento fallido. -25 puntos.");
+        }
+    
+        // Actualizamos el texto del Label visualmente
+         lblPuntos.setText("Puntos: " + puntosTotales);
     }
 }

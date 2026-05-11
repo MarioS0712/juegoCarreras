@@ -43,6 +43,12 @@ public class Corredor extends Thread {
                     synchronized (Corredor.class) {
                         if (!hayGanador) {
                             hayGanador = true;
+                            if (this.nombre.equalsIgnoreCase("Crash") || this.nombre.equalsIgnoreCase("Jugador")) {
+                                Ventana.actualizarPuntuacion(true);
+                            } else {
+                                Ventana.actualizarPuntuacion(false);
+                            }
+                            
                             final String ganador = nombre;
                             SwingUtilities.invokeLater(() -> {
                                 lblResultado.setText("¡" + ganador + " ganó la carrera!");
