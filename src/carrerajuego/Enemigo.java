@@ -22,6 +22,8 @@ public class Enemigo extends Thread {
 
     public Enemigo(JLabel label, JLabel crash, JLabel lblResultado, JFrame ventanaActual) {
         this.label = label;
+        this.label2 = null;
+        this.label3 = null;
         this.crash = crash;
         this.lblResultado = lblResultado;
         this.ventanaActual = ventanaActual;
@@ -90,41 +92,54 @@ public class Enemigo extends Thread {
                     if (y3 < -100) {
                         y3 = 750;
                     }
-
                     final int posY2 = y2;
                     final int posX2 = x2;
                     final int posY3 = y3;
                     final int posX3 = x3;
-                    SwingUtilities.invokeLater(() -> label2.setLocation(posX2, posY2));
-                    SwingUtilities.invokeLater(() -> label3.setLocation(posX3, posY3));
+                    SwingUtilities.invokeLater(() -> {
+                        if (label2 != null) {
+                            label2.setLocation(posX2, posY2);
+                        }
+                    });
+                    SwingUtilities.invokeLater(() -> {
+                        if (label3 != null) {
+                            label3.setLocation(posX3, posY3);
+                        }
+                    });
 
                     // Colisión label2 y label3 con Crash
-                    if (label2.getBounds().intersects(crash.getBounds())
+                    if (label.getBounds().intersects(crash.getBounds()) || label2.getBounds().intersects(crash.getBounds())
                             || label3.getBounds().intersects(crash.getBounds())) {
+
+                        // Resetear posición en lugar de detener
+                        y2 = 750;
+                        y3 = 750;
+
+                        final int posY2reset = y2;
+                        final int posY3reset = y3;
+                        SwingUtilities.invokeLater(() -> {
+                            label2.setLocation(x2, posY2reset);
+                            label3.setLocation(x3, posY3reset);
+                        });
+
+                        // Mostrar derrota y detener
                         activo = false;
                         SwingUtilities.invokeLater(() -> mostrarDerrota("¡Un enemigo atrapó a Crash!"));
                         Puntos.drecrementarPuntos(10);
+                        CrashJugador.interrupted();
+                        break;
+                    }
+
+                } else {
+                    // Colisión con Crash
+                    if (label.getBounds().intersects(crash.getBounds())) {
+                        activo = false;
+                        SwingUtilities.invokeLater(() -> mostrarDerrota("¡Un enemigo atrapó a Crash!"));
+                        Puntos.drecrementarPuntos(10);
+                        CrashJugador.interrupted();
                         break;
                     }
                 }
-                // Colisión con Crash
-                if (label.getBounds().intersects(crash.getBounds())) {
-                    activo = false;
-                    y2 = 750;
-                    y3 = 750;
-                    final int posY2reset = y2;
-                    final int posY3reset = y3;
-                    SwingUtilities.invokeLater(() -> {
-                        label2.setLocation(x2, posY2reset);
-                        label3.setLocation(x3, posY3reset);
-                    });
-                    SwingUtilities.invokeLater(()
-                            -> mostrarDerrota("¡Un enemigo atrapó a Crash!")
-                    );
-                    Puntos.drecrementarPuntos(10);
-                    break;
-                }
-
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;

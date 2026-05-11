@@ -26,8 +26,10 @@ public class VentanaMenu extends JFrame {
     private JLabel lblFondo;
 
     public VentanaMenu() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1250, 850);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
         setLayout(null);  // Layout absoluto
         // Fondo
         lblFondo = new JLabel(redimensionarImagen("fondoMenu.png", 1250, 850));
