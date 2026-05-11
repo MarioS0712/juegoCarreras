@@ -16,7 +16,7 @@ public class CrashJugador extends Thread {
     private int velY = 0;
     private int yInicial;
 
-    public CrashJugador(JLabel label, JLabel lblResultado, List<Obstaculo> obstaculos,JFrame ventanaActual) {
+    public CrashJugador(JLabel label, JLabel lblResultado, List<Obstaculo> obstaculos, JFrame ventanaActual) {
         this.label = label;
         this.lblResultado = lblResultado;
         this.obstaculos = obstaculos;
@@ -146,9 +146,10 @@ public class CrashJugador extends Thread {
                 null, opciones, opciones[0]
         );
         if (respuesta == 0) {
+            if(Ventana == ventanaActual)
             Ventana.reiniciarJuego();
         } else {
-    
+
             Ventana.mostrarNiveles();
             ventanaActual.dispose();
         }
@@ -178,8 +179,8 @@ public class CrashJugador extends Thread {
             if (respuesta == 0) {
                 Ventana.reiniciarJuego();
             } else {
-                 Ventana.mostrarNiveles();
-                 ventanaActual.dispose();
+                Ventana.mostrarNiveles();
+                ventanaActual.dispose();
             }
         }
     }

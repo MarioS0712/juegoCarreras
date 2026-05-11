@@ -18,8 +18,9 @@ public class Ventana2 extends JFrame {
     public static JLabel lblResultado;
     private JLabel lblMeta;
     private JLabel lblFondo;
+
     public static int puntosTotales = 0;
-    private JLabel lblPuntos;
+    private static JLabel lblPuntos;
 
     // Obstáculos y enemigo
     private static List<Obstaculo> obstaculos = new ArrayList<>();
@@ -30,7 +31,6 @@ public class Ventana2 extends JFrame {
     public static Enemigo enemigoHilo;
     public static Thread hiloUkauka;
     public static Thread hiloVortex;
-
 
     public Ventana2() {
         setTitle("Crash Bandicoot Scape of Cortex");
@@ -66,12 +66,7 @@ public class Ventana2 extends JFrame {
         agregarObstaculo("tnt", 200, 420);
         agregarObstaculo("caja", 450, 420);
         agregarObstaculo("sorpresa", 700, 420);
-        agregarObstaculo("tnt", 200, 400);
-        agregarObstaculo("tnt", 200, 380);
-        agregarObstaculo("tnt", 220, 360);
-        agregarObstaculo("caja", 900, 420);
-        agregarObstaculo("caja", 900, 350);
-        
+        agregarObstaculo("tnt", 200, 440);
         // Meta
         lblMeta = new JLabel(redimensionarImagen("cristal.png", 100, 100));
         lblMeta.setBounds(1150, 360, 100, 100);
@@ -82,7 +77,7 @@ public class Ventana2 extends JFrame {
         lblResultado.setForeground(Color.WHITE);
         lblResultado.setBounds(220, 20, 400, 30);
         lblFondo.add(lblResultado);
-        
+
         //puntos
         lblPuntos = new JLabel("Puntos: " + puntosTotales);
         lblPuntos.setForeground(Color.YELLOW); // Amarillo para que resalte
@@ -132,6 +127,21 @@ public class Ventana2 extends JFrame {
 
         setFocusable(true);
         setVisible(true);
+        
+
+    }
+
+    
+
+    
+    public static void mostrarNiveles() {
+        GestorAudio.getInstance().detener();
+        Niveles ventanaN = new Niveles();
+        ventanaN.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaN.setSize(1250, 850);
+        ventanaN.setResizable(false);
+        ventanaN.setLocationRelativeTo(null);
+        ventanaN.setVisible(true);
     }
 
     private void agregarObstaculo(String tipo, int x, int y) {
@@ -149,44 +159,52 @@ public class Ventana2 extends JFrame {
 
     private void iniciarCarrera() {
         lblResultado.setText("Carrera en progreso...");
-        CorredorIntermedio.resetearGanador();
+        Corredor.resetearGanador();
 
-        crashJugador = new CrashJugador(personajes[1], lblResultado, obstaculos);
+        crashJugador = new CrashJugador(personajes[1], lblResultado, obstaculos,this);
         crashJugador.start();
 
-        hiloUkauka = new CorredorIntermedio("UkaUka", personajes[0], lblResultado);
-        hiloVortex = new CorredorIntermedio("Vortex", personajes[2], lblResultado);
+        hiloUkauka = new Corredor("UkaUka", personajes[0], lblResultado,this);
+        hiloVortex = new Corredor("Vortex", personajes[2], lblResultado,this);
         hiloUkauka.start();
         hiloVortex.start();
 
-        enemigoHilo = new Enemigo(lblEnemigo, personajes[1], lblResultado);
+        enemigoHilo = new Enemigo(lblEnemigo, personajes[1], lblResultado,this);
         enemigoHilo.start();
 
         requestFocusInWindow();
     }
 
     public static void reiniciarJuego() {
-    // Detener TODOS los hilos activos
-    if (crashJugador != null) crashJugador.detener();
-    if (enemigoHilo  != null) enemigoHilo.detener();
-    if (hiloUkauka   != null) hiloUkauka.interrupt();
-    if (hiloVortex   != null) hiloVortex.interrupt();
+        // Detener TODOS los hilos activos
+        if (crashJugador != null) {
+            crashJugador.detener();
+        }
+        if (enemigoHilo != null) {
+            enemigoHilo.detener();
+        }
+        if (hiloUkauka != null) {
+            hiloUkauka.interrupt();
+        }
+        if (hiloVortex != null) {
+            hiloVortex.interrupt();
+        }
 
-    CorredorIntermedio.resetearGanador();
+        Corredor.resetearGanador();
 
-    SwingUtilities.invokeLater(() -> {
-        reiniciarUbi();
-        lblResultado.setText("¿Quién ganará?");
+        SwingUtilities.invokeLater(() -> {
+            reiniciarUbi();
+            lblResultado.setText("¿Quién ganará?");
+            lblPuntos.setText("Puntos: " + puntosTotales);
+            // Crear hilos nuevos
+            crashJugador = new CrashJugador(personajes[1], lblResultado, obstaculos,null);
 
-        // Crear hilos nuevos
-        crashJugador = new CrashJugador(personajes[1], lblResultado, obstaculos);
+            hiloUkauka = new Corredor("UkaUka", personajes[0], lblResultado,null);
+            hiloVortex = new Corredor("Vortex", personajes[2], lblResultado,null);
 
-        hiloUkauka = new CorredorIntermedio("UkaUka", personajes[0], lblResultado);
-        hiloVortex = new CorredorIntermedio("Vortex", personajes[2], lblResultado);
-
-        enemigoHilo = new Enemigo(lblEnemigo, personajes[1], lblResultado);
-    });
-}
+            enemigoHilo = new Enemigo(lblEnemigo, personajes[1], lblResultado,null);
+        });
+    }
 
     public static void reiniciarUbi() {
         SwingUtilities.invokeLater(() -> {
@@ -205,19 +223,22 @@ public class Ventana2 extends JFrame {
         Image imagenRedimensionada = imagenOriginal.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
         return new ImageIcon(imagenRedimensionada);
     }
-     public void actualizarPuntuacion(boolean gano) {
+
+    public static void actualizarPuntuacion(boolean gano) {
         if (gano) {
             puntosTotales += 100;
-        // Opcional: Mostrar un mensaje rápido
-            System.out.println("¡Nivel superado! +100 puntos.");
         } else {
-        puntosTotales -= 25;
-        // Evitar que los puntos sean negativos (opcional)
-            if (puntosTotales < 0) puntosTotales = 0; 
-            System.out.println("Intento fallido. -25 puntos.");
+            puntosTotales -= 25;
+            if (puntosTotales < 0) {
+                puntosTotales = 0;
+            }
         }
-    
-        // Actualizamos el texto del Label visualmente
-         lblPuntos.setText("Puntos: " + puntosTotales);
+
+        // Actualización visual obligatoria
+        if (lblPuntos != null) {
+            lblPuntos.setText("Puntos: " + puntosTotales);
+            lblPuntos.repaint(); // <--- Fuerza a Java a pintar el cambio
+            lblPuntos.revalidate(); // <--- Reorganiza el layout si es necesario
+        }
     }
 }

@@ -15,7 +15,7 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  * @author mariosolis
  */
 public class Niveles extends JFrame {
-
+    
     private JLabel lblFondo;
 
     public Niveles() {
