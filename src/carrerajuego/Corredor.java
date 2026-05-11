@@ -84,6 +84,15 @@ public class Corredor extends Thread {
                                     if (detectarVentana(ventanaActual).equals(nivel2)) {
                                         Ventana2.reiniciarJuego();
                                     }
+                                    if (Corredor.detectarVentana(ventanaActual).equals(nivel3)) {
+                                        Ventana3.reiniciarJuego();
+                                    }
+                                    if (Corredor.detectarVentana(ventanaActual).equals(nivel4)) {
+                                        Ventana4.reiniciarJuego();
+                                    }
+                                    if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
+                                        Ventana5.reiniciarJuego();
+                                    }
                                 } else {
                                     if (detectarVentana(ventanaActual).equals(nivel1)) {
                                         Ventana.mostrarNiveles();
@@ -92,6 +101,20 @@ public class Corredor extends Thread {
 
                                     if (detectarVentana(ventanaActual).equals(nivel2)) {
                                         Ventana2.mostrarNiveles();
+                                        ventanaActual.dispose();
+                                    }
+                                    if (Corredor.detectarVentana(ventanaActual).equals(nivel3)) {
+                                        Ventana3.mostrarNiveles();
+                                        ventanaActual.dispose();
+                                    }
+
+                                    if (Corredor.detectarVentana(ventanaActual).equals(nivel4)) {
+                                        Ventana4.mostrarNiveles();
+                                        ventanaActual.dispose();
+                                    }
+
+                                    if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
+                                        Ventana5.mostrarNiveles();
                                         ventanaActual.dispose();
                                     }
                                 }

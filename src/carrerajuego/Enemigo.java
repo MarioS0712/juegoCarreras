@@ -75,7 +75,7 @@ public class Enemigo extends Thread {
 
             Corredor.hayGanador = true;
             lblResultado.setText(mensaje);
-            // Detener rivales y enemigo
+            // Detener rivales y enemigo Ventana1
             if (Corredor.detectarVentana(ventanaActual).equals(nivel1)) {
                 if (Ventana.hiloUkauka != null) {
                     Ventana.hiloUkauka.interrupt();
@@ -88,6 +88,7 @@ public class Enemigo extends Thread {
                 }
                 CrashJugador.interrupted();
             }
+            //Ventana2
             if (Corredor.detectarVentana(ventanaActual).equals(nivel2)) {
                 if (Ventana2.hiloUkauka != null) {
                     Ventana2.hiloUkauka.interrupt();
@@ -98,6 +99,46 @@ public class Enemigo extends Thread {
                 if (Ventana2.enemigoHilo != null) {
                     Ventana2.enemigoHilo.detener();
                 }
+                CrashJugador.interrupted();
+            }
+            //Ventana3
+            if (Corredor.detectarVentana(ventanaActual).equals(nivel3)) {
+                if (Ventana3.hiloUkauka != null) {
+                    Ventana3.hiloUkauka.interrupt();
+                }
+                if (Ventana3.hiloVortex != null) {
+                    Ventana3.hiloVortex.interrupt();
+                }
+                if (Ventana3.enemigoHilo != null) {
+                    Ventana3.enemigoHilo.detener();
+                }
+                CrashJugador.interrupted();
+            }
+            //Ventana4
+            if (Corredor.detectarVentana(ventanaActual).equals(nivel4)) {
+                if (Ventana4.hiloUkauka != null) {
+                    Ventana4.hiloUkauka.interrupt();
+                }
+                if (Ventana4.hiloVortex != null) {
+                    Ventana4.hiloVortex.interrupt();
+                }
+                if (Ventana4.enemigoHilo != null) {
+                    Ventana4.enemigoHilo.detener();
+                }
+                CrashJugador.interrupted();
+            }
+            //Ventana5
+            if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
+                if (Ventana5.hiloUkauka != null) {
+                    Ventana5.hiloUkauka.interrupt();
+                }
+                if (Ventana5.hiloVortex != null) {
+                    Ventana5.hiloVortex.interrupt();
+                }
+                if (Ventana5.enemigoHilo != null) {
+                    Ventana5.enemigoHilo.detener();
+                }
+                CrashJugador.interrupted();
             }
 
             String[] opciones = {"Reintentar", "Salir"};
@@ -115,6 +156,15 @@ public class Enemigo extends Thread {
                 if (Corredor.detectarVentana(ventanaActual).equals(nivel2)) {
                     Ventana2.reiniciarJuego();
                 }
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel3)) {
+                    Ventana3.reiniciarJuego();
+                }
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel4)) {
+                    Ventana4.reiniciarJuego();
+                }
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
+                    Ventana5.reiniciarJuego();
+                }
             } else {
                 if (Corredor.detectarVentana(ventanaActual).equals(nivel1)) {
                     Ventana.mostrarNiveles();
@@ -123,6 +173,20 @@ public class Enemigo extends Thread {
 
                 if (Corredor.detectarVentana(ventanaActual).equals(nivel2)) {
                     Ventana2.mostrarNiveles();
+                    ventanaActual.dispose();
+                }
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel3)) {
+                    Ventana3.mostrarNiveles();
+                    ventanaActual.dispose();
+                }
+
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel4)) {
+                    Ventana4.mostrarNiveles();
+                    ventanaActual.dispose();
+                }
+
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
+                    Ventana5.mostrarNiveles();
                     ventanaActual.dispose();
                 }
             }
