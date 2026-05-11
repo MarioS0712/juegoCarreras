@@ -164,11 +164,7 @@ public class Ventana5 extends JFrame {
         hiloUkauka.start();
         hiloVortex.start();
 
-        enemigoHilo = new Enemigo(lblEnemigo, personajes[1], lblResultado, this);
-        enemigoHilo.start();
-        enemigoHilo = new Enemigo(lblEnemigo2, personajes[1], lblResultado, this);
-        enemigoHilo.start();
-        enemigoHilo = new Enemigo(lblEnemigo3, personajes[1], lblResultado, this);
+        enemigoHilo = new Enemigo(lblEnemigo,lblEnemigo2,lblEnemigo3, personajes[1], lblResultado, this);
         enemigoHilo.start();
 
         requestFocusInWindow();

@@ -27,6 +27,15 @@ public class Enemigo extends Thread {
         this.ventanaActual = ventanaActual;
     }
 
+    public Enemigo(JLabel label, JLabel label2, JLabel label3, JLabel crash, JLabel lblResultado, JFrame ventanaActual) {
+        this.label = label;
+        this.label2 = label2;
+        this.label3 = label3;
+        this.crash = crash;
+        this.lblResultado = lblResultado;
+        this.ventanaActual = ventanaActual;
+    }
+
     public void detener() {
         activo = false;
         interrupt();
@@ -37,10 +46,11 @@ public class Enemigo extends Thread {
         Random rand = new Random();
         int x = label.getX();
         int y = label.getY();
-        int x2 = label2.getX();
-        int y2 = label2.getY();
-        int x3 = label2.getX();
-        int y3 = label3.getY();
+        // Solo inicializar label2/label3 si existen
+        int x2 = (label2 != null) ? label2.getX() : 0;
+        int y2 = (label2 != null) ? label2.getY() : 0;
+        int x3 = (label3 != null) ? label3.getX() : 0;
+        int y3 = (label3 != null) ? label3.getY() : 0;
         while (activo && !Thread.currentThread().isInterrupted()) {
             try {
                 Thread.sleep(30);
@@ -60,8 +70,6 @@ public class Enemigo extends Thread {
                 }
                 if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
                     x -= rand.nextInt(35) + 2;
-                    y2 -= rand.nextInt(35) + 2;
-                    y3 -= rand.nextInt(35) + 2;
                 }
 
                 // Reaparece por la derecha al salir por la izquierda
@@ -71,22 +79,45 @@ public class Enemigo extends Thread {
                 final int posX = x;
                 SwingUtilities.invokeLater(() -> label.setLocation(posX, y));
                 //Nivel5 Reaparecen por abajo
-                if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel5) && label2 != null && label3 != null) {
+                    y2 -= rand.nextInt(8) + 3; // sube
+                    y3 -= rand.nextInt(8) + 3; // sube
+
+                    // Reaparecen por abajo al salir por arriba
                     if (y2 < -100) {
                         y2 = 750;
                     }
                     if (y3 < -100) {
                         y3 = 750;
                     }
-                    final int posY2 = y2;
-                    final int posY3 = y3;
-                    SwingUtilities.invokeLater(() -> label.setLocation(x2, posY2));
-                    SwingUtilities.invokeLater(() -> label.setLocation(x3, posY3));
-                }
 
+                    final int posY2 = y2;
+                    final int posX2 = x2;
+                    final int posY3 = y3;
+                    final int posX3 = x3;
+                    SwingUtilities.invokeLater(() -> label2.setLocation(posX2, posY2));
+                    SwingUtilities.invokeLater(() -> label3.setLocation(posX3, posY3));
+
+                    // Colisión label2 y label3 con Crash
+                    if (label2.getBounds().intersects(crash.getBounds())
+                            || label3.getBounds().intersects(crash.getBounds())) {
+                        activo = false;
+                        SwingUtilities.invokeLater(() -> mostrarDerrota("¡Un enemigo atrapó a Crash!"));
+                        Puntos.drecrementarPuntos(10);
+                        break;
+                    }
+                }
                 // Colisión con Crash
                 if (label.getBounds().intersects(crash.getBounds())) {
                     activo = false;
+                    y2 = 750;
+                    y3 = 750;
+                    final int posY2reset = y2;
+                    final int posY3reset = y3;
+                    SwingUtilities.invokeLater(() -> {
+                        label2.setLocation(x2, posY2reset);
+                        label3.setLocation(x3, posY3reset);
+                    });
                     SwingUtilities.invokeLater(()
                             -> mostrarDerrota("¡Un enemigo atrapó a Crash!")
                     );
