@@ -127,8 +127,9 @@ public class Niveles extends JFrame {
     }
 
     private void nivelUno() {
+        GestorAudio.getInstance().detener();
         Ventana ventana2 = new Ventana();
-        ventana2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventana2.setSize(1250, 850);
         ventana2.setResizable(false);
         ventana2.setLocationRelativeTo(null);
@@ -174,4 +175,5 @@ public class Niveles extends JFrame {
         ventana6.setVisible(true);
         dispose();
     }
+    
 }

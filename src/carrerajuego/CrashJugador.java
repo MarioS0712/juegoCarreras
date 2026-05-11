@@ -9,18 +9,19 @@ public class CrashJugador extends Thread {
     private JLabel lblResultado;
     private List<Obstaculo> obstaculos;
     private boolean activo = true;
-
+    private JFrame ventanaActual;
     private boolean moverDerecha = false;
     private boolean moverIzquierda = false;
     private boolean saltando = false;
     private int velY = 0;
     private int yInicial;
 
-    public CrashJugador(JLabel label, JLabel lblResultado, List<Obstaculo> obstaculos) {
+    public CrashJugador(JLabel label, JLabel lblResultado, List<Obstaculo> obstaculos,JFrame ventanaActual) {
         this.label = label;
         this.lblResultado = lblResultado;
         this.obstaculos = obstaculos;
         this.yInicial = label.getY();
+        this.ventanaActual = ventanaActual;
     }
 
     // Llamados desde el KeyListener de Ventana
@@ -147,7 +148,9 @@ public class CrashJugador extends Thread {
         if (respuesta == 0) {
             Ventana.reiniciarJuego();
         } else {
-            System.exit(0);
+    
+            Ventana.mostrarNiveles();
+            ventanaActual.dispose();
         }
     }
 
@@ -175,7 +178,8 @@ public class CrashJugador extends Thread {
             if (respuesta == 0) {
                 Ventana.reiniciarJuego();
             } else {
-                System.exit(0);
+                 Ventana.mostrarNiveles();
+                 ventanaActual.dispose();
             }
         }
     }

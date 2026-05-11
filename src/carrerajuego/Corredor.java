@@ -9,15 +9,17 @@ import java.util.Random;
  
 public class Corredor extends Thread {
     
-    private String nombre;
+     private String nombre;
     private JLabel personaje;
     private JLabel lblResultado;
-    public static boolean hayGanador = false; // public para que Enemigo y CrashJugador accedan
- 
-    public Corredor(String nombre, JLabel personaje, JLabel lblResultado) {
+    private JFrame ventanaActual; 
+    public static boolean hayGanador = false;
+
+    public Corredor(String nombre, JLabel personaje, JLabel lblResultado, JFrame ventanaActual) {
         this.nombre = nombre;
         this.personaje = personaje;
         this.lblResultado = lblResultado;
+        this.ventanaActual = ventanaActual; 
     }
  
     public static void resetearGanador() {
@@ -64,10 +66,9 @@ public class Corredor extends Thread {
                                 );
                                 if (respuesta == 0) {
                                     Ventana.reiniciarJuego();
-                                    
                                 } else {
-                                    
-                                    System.exit(0);
+                                    Ventana.mostrarNiveles();
+                                    ventanaActual.dispose();
                                 }
                             });
                         }

@@ -31,6 +31,7 @@ public class Ventana2 extends JFrame {
     public static Thread hiloUkauka;
     public static Thread hiloVortex;
 
+
     public Ventana2() {
         setTitle("Crash Bandicoot Scape of Cortex");
         setSize(1250, 850);

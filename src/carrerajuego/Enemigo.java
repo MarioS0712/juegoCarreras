@@ -12,12 +12,14 @@ public class Enemigo extends Thread {
     private JLabel label;
     private JLabel crash;
     private JLabel lblResultado;
+    private JFrame ventanaActual;
     private boolean activo = true;
 
-    public Enemigo(JLabel label, JLabel crash, JLabel lblResultado) {
+    public Enemigo(JLabel label, JLabel crash, JLabel lblResultado,JFrame ventanaActual) {
         this.label = label;
         this.crash = crash;
         this.lblResultado = lblResultado;
+        this.ventanaActual = ventanaActual;
     }
 
     public void detener() {
@@ -86,7 +88,8 @@ public class Enemigo extends Thread {
             if (respuesta == 0) {
                 Ventana.reiniciarJuego();
             } else {
-                System.exit(0);
+                Ventana.mostrarNiveles();
+                ventanaActual.dispose();
             }
         }
     }
