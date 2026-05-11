@@ -193,6 +193,7 @@ public class Ventana extends JFrame {
             }
         });
     }
+    
 
     private ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
         ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(ruta));
@@ -214,5 +215,5 @@ public class Ventana extends JFrame {
             lblPuntos.repaint(); // <--- Fuerza a Java a pintar el cambio
             lblPuntos.revalidate(); // <--- Reorganiza el layout si es necesario
         }
-     }
+     }     
 }
