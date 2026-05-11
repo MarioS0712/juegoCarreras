@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Enemigo extends Thread {
 
-    private JLabel label;
+    private JLabel label, label2, label3;
     private JLabel crash;
     private JLabel lblResultado;
     private JFrame ventanaActual;
@@ -37,21 +37,52 @@ public class Enemigo extends Thread {
         Random rand = new Random();
         int x = label.getX();
         int y = label.getY();
-
+        int x2 = label2.getX();
+        int y2 = label2.getY();
+        int x3 = label2.getX();
+        int y3 = label3.getY();
         while (activo && !Thread.currentThread().isInterrupted()) {
             try {
                 Thread.sleep(30);
 
                 // Se mueve hacia la izquierda
-                x -= rand.nextInt(5) + 2;
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel1)) {
+                    x -= rand.nextInt(5) + 2;
+                }
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel2)) {
+                    x -= rand.nextInt(15) + 2;
+                }
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel3)) {
+                    x -= rand.nextInt(20) + 2;
+                }
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel4)) {
+                    x -= rand.nextInt(25) + 2;
+                }
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
+                    x -= rand.nextInt(35) + 2;
+                    y2 -= rand.nextInt(35) + 2;
+                    y3 -= rand.nextInt(35) + 2;
+                }
 
                 // Reaparece por la derecha al salir por la izquierda
                 if (x < -100) {
                     x = 1250;
                 }
-
                 final int posX = x;
                 SwingUtilities.invokeLater(() -> label.setLocation(posX, y));
+                //Nivel5 Reaparecen por abajo
+                if (Corredor.detectarVentana(ventanaActual).equals(nivel5)) {
+                    if (y2 < -100) {
+                        y2 = 750;
+                    }
+                    if (y3 < -100) {
+                        y3 = 750;
+                    }
+                    final int posY2 = y2;
+                    final int posY3 = y3;
+                    SwingUtilities.invokeLater(() -> label.setLocation(x2, posY2));
+                    SwingUtilities.invokeLater(() -> label.setLocation(x3, posY3));
+                }
 
                 // Colisión con Crash
                 if (label.getBounds().intersects(crash.getBounds())) {

@@ -17,7 +17,7 @@ public class Ventana5 extends JFrame {
 
     // Obstáculos y enemigo
     private static List<Obstaculo> obstaculos = new ArrayList<>();
-    private static JLabel lblEnemigo;
+    private static JLabel lblEnemigo,lblEnemigo2,lblEnemigo3;
 
     // Hilos controlados
     private static CrashJugador crashJugador;
@@ -54,6 +54,12 @@ public class Ventana5 extends JFrame {
         lblEnemigo = new JLabel(redimensionarImagen("enemy.png", 80, 80));
         lblEnemigo.setBounds(1100, 415, 80, 80);
         lblFondo.add(lblEnemigo);
+        lblEnemigo2 = new JLabel(redimensionarImagen("enemy.png", 80, 80));
+        lblEnemigo2.setBounds(750, 750, 80, 80);
+        lblFondo.add(lblEnemigo2);
+        lblEnemigo3 = new JLabel(redimensionarImagen("enemy.png", 80, 80));
+        lblEnemigo3.setBounds(450, 750, 80, 80);
+        lblFondo.add(lblEnemigo3);
         //Obstaculos
         obstaculos.clear();
         agregarObstaculo("tnt", 200, 420);
@@ -159,6 +165,10 @@ public class Ventana5 extends JFrame {
         hiloVortex.start();
 
         enemigoHilo = new Enemigo(lblEnemigo, personajes[1], lblResultado, this);
+        enemigoHilo.start();
+        enemigoHilo = new Enemigo(lblEnemigo2, personajes[1], lblResultado, this);
+        enemigoHilo.start();
+        enemigoHilo = new Enemigo(lblEnemigo3, personajes[1], lblResultado, this);
         enemigoHilo.start();
 
         requestFocusInWindow();
