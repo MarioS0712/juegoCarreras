@@ -64,8 +64,16 @@ public class Ventana5 extends JFrame {
         obstaculos.clear();
         agregarObstaculo("tnt", 200, 420);
         agregarObstaculo("caja", 450, 420);
+        agregarObstaculo("caja", 450, 450);
+        agregarObstaculo("caja", 450, 390);
+        agregarObstaculo("tnt", 590, 260);
         agregarObstaculo("sorpresa", 700, 420);
+        agregarObstaculo("sorpresa", 900, 420);
+        agregarObstaculo("caja", 900, 380);
+        agregarObstaculo("sorpresa", 900, 450);
         agregarObstaculo("tnt", 200, 440);
+        agregarObstaculo("tnt", 1080, 420);
+        
         // Meta
         lblMeta = new JLabel(redimensionarImagen("cristal.png", 100, 100));
         lblMeta.setBounds(1150, 360, 100, 100);

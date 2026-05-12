@@ -61,8 +61,10 @@ public class Ventana3 extends JFrame {
         //Obstaculos
         obstaculos.clear();
         agregarObstaculo("tnt", 200, 420);
-        agregarObstaculo("caja", 450, 420);
+        agregarObstaculo("caja", 300, 420);
+        agregarObstaculo("caja", 820, 420);
         agregarObstaculo("sorpresa", 700, 420);
+        agregarObstaculo("sorpresa", 500, 420);
         agregarObstaculo("tnt", 200, 440);
         // Meta
         lblMeta = new JLabel(redimensionarImagen("cristal.png", 100, 100));
